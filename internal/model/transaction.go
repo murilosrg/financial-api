@@ -16,10 +16,10 @@ func (Transaction) TableName() string {
 	return "transaction"
 }
 
-func (t *Transaction) Create() (transaction *Transaction, err error) {
+func (t *Transaction) Create() error {
 	if err := database.DB.Create(&t).Error; err != nil {
-		return nil, err
+		return err
 	}
 
-	return t, err
+	return nil
 }

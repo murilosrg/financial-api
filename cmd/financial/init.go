@@ -41,8 +41,8 @@ func seed() {
 	ot1 := model.OperationType{ID: 2, Description: "COMPRA PARCELADA", IsDebit: true}
 	ot2 := model.OperationType{ID: 3, Description: "SAQUE", IsDebit: true}
 	ot3 := model.OperationType{ID: 4, Description: "PAGAMENTO", IsDebit: false}
-	_, _ = ot0.Create()
-	_, _ = ot1.Create()
-	_, _ = ot2.Create()
-	_, _ = ot3.Create()
+	_ = ot0.Create()
+	_ = ot1.Create()
+	_ = ot2.Create()
+	_ = ot3.Create()
 }

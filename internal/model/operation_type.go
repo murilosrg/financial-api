@@ -7,25 +7,25 @@ import (
 type OperationType struct {
 	ID          int    `gorm:"primaryKey"`
 	Description string `json:"description" gorm:"not null;type:varchar(50)"`
-	IsDebit     bool   `json:"is_debit" gorm:"not null;column:debit;type:bit"`
+	IsDebit     bool   `json:"is_debit" gorm:"not null;column:debit"`
 }
 
 func (OperationType) TableName() string {
 	return "operation_type"
 }
 
-func (o *OperationType) Create() (operation *OperationType, err error) {
-	if err = database.DB.Create(&o).Error; err != nil {
-		return nil, err
+func (o *OperationType) Create() error {
+	if err := database.DB.Create(&o).Error; err != nil {
+		return err
 	}
 
-	return operation, nil
+	return nil
 }
 
-func (o *OperationType) Find() (operation *OperationType, err error) {
-	if err = database.DB.Where(&o).First(&operation).Error; err != nil {
-		return nil, err
+func (o *OperationType) Find(id int) error {
+	if err := database.DB.First(&o, id).Error; err != nil {
+		return err
 	}
 
-	return operation, nil
+	return nil
 }
