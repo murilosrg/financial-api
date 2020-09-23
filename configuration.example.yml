@@ -1,0 +1,6 @@
+db:
+  driver: sqlite3
+  addr: ./financial.db
+  # driver: mysql
+  # addr: user:password@/dbname?charset=utf8&parseTime=True&loc=Local
+address: :5000
