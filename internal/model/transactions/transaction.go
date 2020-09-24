@@ -1,12 +1,12 @@
-package model
+package transactions
 
 import (
-	"github.com/murilosrg/financial-api/internal/database"
+	"github.com/murilosrg/financial-api/internal/model"
 	"github.com/shopspring/decimal"
 )
 
 type Transaction struct {
-	GORMBase
+	model.GORMBase
 	Amount          decimal.Decimal `json:"amount" gorm:"type:decimal(20,8);not null"`
 	AccountID       int             `json:"account_id" gorm:"not null;index"`
 	OperationTypeID int             `json:"operation_type_id" gorm:"not null;index"`
@@ -14,12 +14,4 @@ type Transaction struct {
 
 func (Transaction) TableName() string {
 	return "transaction"
-}
-
-func (t *Transaction) Create() error {
-	if err := database.DB.Create(&t).Error; err != nil {
-		return err
-	}
-
-	return nil
 }

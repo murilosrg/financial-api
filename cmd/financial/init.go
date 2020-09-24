@@ -4,7 +4,9 @@ import (
 	"fmt"
 
 	"github.com/murilosrg/financial-api/internal/database"
-	"github.com/murilosrg/financial-api/internal/model"
+	"github.com/murilosrg/financial-api/internal/model/accounts"
+	"github.com/murilosrg/financial-api/internal/model/operations"
+	"github.com/murilosrg/financial-api/internal/model/transactions"
 )
 
 func initAll() {
@@ -13,36 +15,38 @@ func initAll() {
 }
 
 func drop() {
-	if (database.DB.HasTable(&model.Transaction{})) {
+	if (database.DB.HasTable(&transactions.Transaction{})) {
 		fmt.Println("dropping table transaction.")
-		database.DB.DropTable(&model.Transaction{})
+		database.DB.DropTable(&transactions.Transaction{})
 	}
 
-	if (database.DB.HasTable(&model.Account{})) {
+	if (database.DB.HasTable(&accounts.Account{})) {
 		fmt.Println("dropping table account.")
-		database.DB.DropTable(&model.Account{})
+		database.DB.DropTable(&accounts.Account{})
 	}
 
-	if (database.DB.HasTable(&model.OperationType{})) {
+	if (database.DB.HasTable(&operations.OperationType{})) {
 		fmt.Println("dropping table operation_type.")
-		database.DB.DropTable(&model.OperationType{})
+		database.DB.DropTable(&operations.OperationType{})
 	}
 }
 
 func seed() {
-	database.DB.AutoMigrate(&model.Account{})
-	database.DB.AutoMigrate(&model.OperationType{})
+	database.DB.AutoMigrate(&accounts.Account{})
+	database.DB.AutoMigrate(&operations.OperationType{})
 
-	database.DB.AutoMigrate(&model.Transaction{}).
+	database.DB.AutoMigrate(&transactions.Transaction{}).
 		AddForeignKey("account_id", "account(id)", "RESTRICT", "RESTRICT").
 		AddForeignKey("operation_type_id", "operation_type(id)", "RESTRICT", "RESTRICT")
 
-	ot0 := model.OperationType{ID: 1, Description: "COMPRA A VISTA", IsDebit: true}
-	ot1 := model.OperationType{ID: 2, Description: "COMPRA PARCELADA", IsDebit: true}
-	ot2 := model.OperationType{ID: 3, Description: "SAQUE", IsDebit: true}
-	ot3 := model.OperationType{ID: 4, Description: "PAGAMENTO", IsDebit: false}
-	_ = ot0.Create()
-	_ = ot1.Create()
-	_ = ot2.Create()
-	_ = ot3.Create()
+	ot0 := &operations.OperationType{ID: 1, Description: "COMPRA A VISTA", IsDebit: true}
+	ot1 := &operations.OperationType{ID: 2, Description: "COMPRA PARCELADA", IsDebit: true}
+	ot2 := &operations.OperationType{ID: 3, Description: "SAQUE", IsDebit: true}
+	ot3 := &operations.OperationType{ID: 4, Description: "PAGAMENTO", IsDebit: false}
+
+	or := operations.NewOperationTypeRepository(database.DB)
+	_ = or.Create(ot0)
+	_ = or.Create(ot1)
+	_ = or.Create(ot2)
+	_ = or.Create(ot3)
 }

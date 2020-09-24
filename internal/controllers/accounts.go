@@ -5,34 +5,53 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/murilosrg/financial-api/internal/model"
+	"github.com/murilosrg/financial-api/internal/model/accounts"
 )
 
-func PostAccount(c *gin.Context) {
-	account := model.Account{}
+type IAccountController interface {
+	Post(c *gin.Context)
+	Find(c *gin.Context)
+}
+
+type AccountController struct {
+	service accounts.IAccountService
+}
+
+func NewAccountController(service accounts.IAccountService) IAccountController {
+	return &AccountController{
+		service: service,
+	}
+}
+
+func (a *AccountController) Post(c *gin.Context) {
+	account := &accounts.Account{}
 	c.BindJSON(&account)
 
-	if err := account.Create(); err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, err)
+	account, err := a.service.Create(account)
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	c.JSON(http.StatusCreated, account)
 }
 
-func FindAccount(c *gin.Context) {
+func (a *AccountController) Find(c *gin.Context) {
 	id := c.Params.ByName("accountId")
-	account := model.Account{}
+	account := &accounts.Account{}
 
 	idParam, err := strconv.Atoi(id)
 
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	if err := account.Find(idParam); err != nil {
-		c.AbortWithStatusJSON(http.StatusNotFound, err)
+	account, err = a.service.Find(idParam)
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
 

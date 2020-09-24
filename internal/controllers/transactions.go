@@ -4,32 +4,31 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/murilosrg/financial-api/internal/model"
+	"github.com/murilosrg/financial-api/internal/model/transactions"
 )
 
-func PostTransaction(c *gin.Context) {
+type ITransactionController interface {
+	Post(c *gin.Context)
+}
 
-	transaction := model.Transaction{}
+type TransactionController struct {
+	service transactions.ITransactionService
+}
+
+func NewTransactionController(service transactions.ITransactionService) ITransactionController {
+	return &TransactionController{
+		service: service,
+	}
+}
+
+func (t *TransactionController) Post(c *gin.Context) {
+	transaction := &transactions.Transaction{}
 	c.BindJSON(&transaction)
 
-	account := model.Account{}
-	if err := account.Find(transaction.AccountID); err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "account not found"})
-		return
-	}
+	transaction, err := t.service.Create(transaction)
 
-	operation := model.OperationType{}
-	if err := operation.Find(transaction.OperationTypeID); err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "operation invalid"})
-		return
-	}
-
-	if operation.IsDebit {
-		transaction.Amount = transaction.Amount.Neg()
-	}
-
-	if err := transaction.Create(); err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, err)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
