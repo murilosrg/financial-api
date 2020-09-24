@@ -13,6 +13,7 @@ type Config struct {
 		Address string `json:"address"`
 	} `json:"db"`
 	Address string `json:"address"`
+	Mode    string `json:"mode"`
 }
 
 var config *Config

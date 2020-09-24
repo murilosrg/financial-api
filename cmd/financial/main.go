@@ -23,6 +23,7 @@ func load() {
 }
 
 func listen() {
+	gin.SetMode(config.Load().Mode)
 	server := gin.Default()
 	routes.SetupApiRouter(server)
 	server.Run(config.Load().Address)

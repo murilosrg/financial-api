@@ -30,10 +30,10 @@ $ go mod download
 ### 3.Create Configuration
 
 ```shell
-$ touch ./configuration.yaml
+$ touch ./configuration.yml
 ```
 
-```yaml
+```yml
 # configuration for dev
 db:
   driver: sqlite3
