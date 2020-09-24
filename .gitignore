@@ -8,3 +8,5 @@
 *.db
 configuration.yml
 /database
+.vscode
+mocks

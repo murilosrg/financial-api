@@ -5,6 +5,8 @@ import (
 	"regexp"
 )
 
+//go:generate mockgen -source=service.go -destination=../mocks/mock_account_service.go -package=mocks
+
 type IAccountService interface {
 	Find(id int) (*Account, error)
 	Create(account *Account) (*Account, error)
@@ -21,9 +23,9 @@ func NewAccountService(repo IAccountRepository) IAccountService {
 }
 
 func (a *AccountService) Find(id int) (*Account, error) {
-	account := &Account{}
+	account, err := a.repo.Find(id)
 
-	if err := a.repo.Find(account, id); err != nil {
+	if err != nil {
 		return nil, errors.New("account not found")
 	}
 

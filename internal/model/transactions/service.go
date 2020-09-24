@@ -7,6 +7,8 @@ import (
 	"github.com/murilosrg/financial-api/internal/model/operations"
 )
 
+//go:generate mockgen -source=service.go -destination=../mocks/mock_transaction_service.go -package=mocks
+
 type ITransactionService interface {
 	Create(transaction *Transaction) (*Transaction, error)
 }

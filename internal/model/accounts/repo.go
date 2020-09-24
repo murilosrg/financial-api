@@ -4,9 +4,11 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+//go:generate mockgen -source=repo.go -destination=../mocks/mock_account_repository.go -package=mocks
+
 type IAccountRepository interface {
 	Create(account *Account) error
-	Find(account *Account, id int) error
+	Find(id int) (*Account, error)
 }
 
 type AccountRepository struct {
@@ -27,10 +29,11 @@ func (a *AccountRepository) Create(account *Account) error {
 	return nil
 }
 
-func (a *AccountRepository) Find(account *Account, id int) error {
+func (a *AccountRepository) Find(id int) (*Account, error) {
+	var account Account
 	if err := a.db.First(&account, id).Error; err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return &account, nil
 }
