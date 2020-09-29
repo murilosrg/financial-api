@@ -24,8 +24,7 @@ jobs:
         if: success()
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: build -t murilosrg/financial-api .
+        run: docker build -t murilosrg/financial-api .
 
       - name: docker push
         if: success()
