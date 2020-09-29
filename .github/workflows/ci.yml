@@ -21,9 +21,9 @@ jobs:
         
       - name: docker build
         if: success()
+        run: docker build --build-arg SONAR_TOKEN=$SONAR_TOKEN -t murilosrg/financial-api .
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: docker build -t murilosrg/financial-api .
 
       - name: docker push
         if: success()
