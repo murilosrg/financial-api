@@ -1,5 +1,7 @@
 FROM golang:1.15.2-alpine AS ci
 
+ARG SONAR_TOKEN
+
 RUN apk update && apk upgrade && apk add git gcc g++
 RUN apk update && apk upgrade && apk add zip unzip openjdk8-jre git gcc musl-dev
 RUN wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.4.0.2170-linux.zip
