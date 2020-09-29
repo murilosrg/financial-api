@@ -18,7 +18,6 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        
       - name: docker build
         if: success()
         run: docker build --build-arg SONAR_TOKEN=$SONAR_TOKEN -t murilosrg/financial-api .
