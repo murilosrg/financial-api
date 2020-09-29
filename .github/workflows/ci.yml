@@ -27,6 +27,4 @@ jobs:
 
       - name: docker push
         if: success()
-        uses: actions-hub/docker@master
-        with:
-          args: push murilosrg/financial-api
+        run: docker push murilosrg/financial-api
