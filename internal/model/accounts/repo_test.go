@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/go-playground/assert/v2"
 	"github.com/jinzhu/gorm"
 	"github.com/murilosrg/financial-api/internal/model"
 	"github.com/murilosrg/financial-api/internal/model/accounts"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestRepoFind(t *testing.T) {

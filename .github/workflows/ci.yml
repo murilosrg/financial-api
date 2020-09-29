@@ -1,0 +1,26 @@
+name: Build dockerfile
+"on":
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  build-and-publish:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: docker build
+        uses: actions/docker/cli@master
+        with:
+          args: build -t murilosrg/financial-api .
+      - name: docker login
+        uses: actions/docker/login@master
+        env:
+          DOCKER_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
+          DOCKER_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
+      - name: docker push
+        uses: actions/docker/cli@master
+        with:
+          args: push murilosrg/financial-api

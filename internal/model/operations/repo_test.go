@@ -6,9 +6,9 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/go-playground/assert/v2"
 	"github.com/jinzhu/gorm"
 	"github.com/murilosrg/financial-api/internal/model/operations"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestRepoFind(t *testing.T) {

@@ -11,13 +11,13 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/assert/v2"
 	"github.com/golang/mock/gomock"
 	"github.com/murilosrg/financial-api/internal/controllers"
 	"github.com/murilosrg/financial-api/internal/model"
 	"github.com/murilosrg/financial-api/internal/model/mocks"
 	"github.com/murilosrg/financial-api/internal/model/transactions"
 	"github.com/shopspring/decimal"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestPostTransaction(t *testing.T) {

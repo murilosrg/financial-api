@@ -2,6 +2,8 @@
 
 [![license](https://img.shields.io/github/license/murilosrg/financial-api)](https://opensource.org/licenses/MIT)
 [![go-mod](https://img.shields.io/github/go-mod/go-version/murilosrg/financial-api)](https://github.com/murilosrg/financial-api)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=murilosrg_financial-api&metric=alert_status)](https://sonarcloud.io/dashboard?id=murilosrg_financial-api)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=murilosrg_financial-api&metric=coverage)](https://sonarcloud.io/dashboard?id=murilosrg_financial-api)
 
 A simple api application written in Go
 
@@ -43,6 +45,7 @@ db:
   # driver: postgres
   # addr: host=myhost user=gorm dbname=gorm sslmode=disable password=mypassword
 address: :5000
+mode: debug
 ```
 
 ### 4.Init and Run
@@ -58,7 +61,7 @@ visit [localhost:5000](http://localhost:5000)
 ## Run Test
 
 ```shell
-$ go test ./...
+$ go test -v ./...
 ```
 
 ## Source

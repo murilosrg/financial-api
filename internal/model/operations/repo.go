@@ -4,6 +4,8 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+//go:generate mockgen -source=repo.go -destination=../mocks/mock_operation_repository.go -package=mocks
+
 type IOperationTypeRepository interface {
 	Create(operationType *OperationType) error
 	Find(id int) (*OperationType, error)
