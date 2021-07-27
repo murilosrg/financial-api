@@ -3,10 +3,8 @@ module github.com/murilosrg/financial-api
 go 1.15
 
 require (
-	github.com/AlekSi/gocov-xml v0.0.0-20190121064608-3a14fb1c4737 // indirect
 	github.com/DATA-DOG/go-sqlmock v1.5.0
-	github.com/axw/gocov v1.0.0 // indirect
-	github.com/gin-gonic/gin v1.6.3
+	github.com/gin-gonic/gin v1.7.0
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/golang/mock v1.3.1
 	github.com/jinzhu/gorm v1.9.16
